@@ -6,6 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
+    # Add the project directory to sys.path
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hotel_booking_system.settings')
 
     try:
