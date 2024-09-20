@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Feedback</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .navbar a:hover {
+            color: #28a745;
+        }
+
+        .main-container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2.5em;
+        }
+
+        .form-container {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        select, input, textarea {
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'view_rooms' %}">Rooms</a>
+        <a href="#">Services</a>
+        <a href="#">About Us</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <div class="main-container">
+        <h1>Leave Your Feedback</h1>
+
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                <label for="room">Select Room:</label>
+                <select name="room" id="room">
+                    {% for room in rooms %}
+                        <option value="{{ room.id }}">{{ room.room_number }} - {{ room.room_type }}</option>
+                    {% endfor %}
+                </select>
+                
+                <label for="rating">Rating:</label>
+                <input type="number" name="rating" min="1" max="5" required>
+                
+                <label for="comment">Comment:</label>
+                <textarea name="comment"></textarea>
+                
+                <button type="submit">Submit Feedback</button>
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>

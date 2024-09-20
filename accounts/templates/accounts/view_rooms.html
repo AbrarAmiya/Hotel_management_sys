@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Rooms</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #f4f4f4; /* Light background for contrast */
+            color: #333;
+        }
+
+        /* Navbar styles */
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        nav ul li a:hover {
+            color: #28a745;
+        }
+
+        /* Hero section */
+        .hero {
+            background-image: url('{% static "images/hero-banner.jpeg" %}');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Home button style */
+        .home-button {
+            padding: 12px 24px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .home-button:hover {
+            background-color: #218838;
+        }
+
+        /* Room listing styles */
+        .room-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .room {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.3s;
+        }
+
+        .room:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .room img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .room h2 {
+            font-size: 1.5em;
+            margin: 15px 0;
+        }
+
+        .room p {
+            font-size: 1em;
+            margin: 10px;
+        }
+
+        .price {
+            font-size: 1.2em;
+            color: #e74c3c;
+        }
+
+        .offer-price {
+            text-decoration: line-through; /* Cross out the offer price */
+            color: gray; /* Change color of the offer price */
+        }
+
+        /* Call-to-action button */
+        .cta {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .cta:hover {
+            background-color: #218838;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        footer .contact-links {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        footer .contact-links a {
+            color: #28a745;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+
+        footer .contact-links a:hover {
+            color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav>
+        <div class="logo">Hotel Booking System</div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'view_rooms' %}">Rooms</a></li>
+            <li><a href="#">About Us</a></li> <!-- Placeholder link -->
+            <li><a href="#">Contact</a></li> <!-- Placeholder link -->
+        </ul>
+    </nav>
+
+    <!-- Hero section -->
+    <div class="hero">
+        <h1>Choose Your Room</h1>
+    </div>
+
+    <!-- Room listing -->
+    <div class="room-container">
+        {% for room in rooms %}
+            <div class="room">
+                <h2>{{ room.room_type }}</h2>
+                <img src="{% static 'images/rooms/'|add:room.room_number|add:'.jpeg' %}" alt="{{ room.room_type }}">
+                <p>Room Number: {{ room.room_number }}</p>
+                <p class="price">Original Price: ${{ room.offer_price|floatformat:2 }}</p>
+                <p class="offer-price">Offer Price: ${{ room.price_per_night|floatformat:2 }}</p>
+                <p>Status: {% if room.is_available %}Available{% else %}Not Available{% endif %}</p>
+                {% if room.is_available %}
+                    <a href="{% url 'book_room' %}?room_id={{ room.id }}" class="cta">Book Now</a>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No rooms available.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Hotel Booking System</p>
+        <div class="contact-links">
+            <a href="#">Contact Us</a> <!-- Placeholder link -->
+            <a href="#">Privacy Policy</a> <!-- Placeholder link -->
+            <a href="#">Terms of Service</a> <!-- Placeholder link -->
+        </div>
+    </footer>
+</body>
+</html>

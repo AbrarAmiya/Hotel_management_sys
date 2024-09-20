@@ -1,0 +1,259 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking System</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1; /* Light background */
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 0;
+            color: white;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+        }
+
+        .navbar a:hover {
+            color: #28a745;
+        }
+
+        /* Main container */
+        .main-container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2.5em;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        /* Buttons and form container */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .button-container a, .button-container form {
+            margin: 0 10px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Slideshow styles */
+        .slideshow-container {
+            position: relative;
+            max-width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slides img {
+            width: 45%;
+            height: 300px;
+            object-fit: cover;
+            margin: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .slides img:hover {
+            transform: scale(1.05);
+        }
+
+        .active {
+            display: flex;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Contact section */
+        .contact-section {
+            background-color: #343a40;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .contact-section p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        .contact-section a {
+            color: #28a745;
+            text-decoration: none;
+        }
+
+        .contact-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #28a745;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'view_rooms' %}">Rooms</a>
+        <a href="#">Services</a>
+        <a href="#">About Us</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <h1>Welcome to Our Hotel Booking System!</h1>
+        <p>Experience luxury and comfort at unbeatable prices.</p>
+
+        <!-- Buttons -->
+        <div class="button-container">
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+            <a href="{% url 'book_room' %}">
+                <button type="button">Go to Booking Page</button>
+            </a>
+        </div>
+
+        <!-- Slideshow container -->
+        <div class="slideshow-container">
+            <div class="slides active">
+                <a href="{% url 'view_rooms' %}">
+                    <img src="{% static 'images/rooms/101.jpeg' %}" alt="Room 101">
+                </a>
+                <a href="{% url 'view_rooms' %}">
+                    <img src="{% static 'images/rooms/102.jpeg' %}" alt="Room 102">
+                </a>
+            </div>
+            <div class="slides hidden">
+                <a href="{% url 'view_rooms' %}">
+                    <img src="{% static 'images/rooms/103.jpeg' %}" alt="Room 103">
+                </a>
+                <a href="{% url 'view_rooms' %}">
+                    <img src="{% static 'images/rooms/104.jpeg' %}" alt="Room 104">
+                </a>
+            </div>
+            <div class="slides hidden">
+                <a href="{% url 'view_rooms' %}">
+                    <img src="{% static 'images/rooms/105.jpeg' %}" alt="Room 105">
+                </a>
+                <a href="{% url 'view_rooms' %}">
+                    <img src="{% static 'images/rooms/106.jpeg' %}" alt="Room 106">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="contact-section">
+        <h2>Contact Us</h2>
+        <p>Phone: +1 234 567 890</p>
+        <p>Email: <a href="mailto:info@hotelbooking.com">info@hotelbooking.com</a></p>
+        <p>Address: 123 Hotel Lane, City, Country</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Hotel Booking System. All Rights Reserved.</p>
+        <p>Designed by <a href="#">YourCompany</a></p>
+    </footer>
+
+    <!-- Slideshow Script -->
+    <script>
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName("slides");
+
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.add("hidden"); // Hide all slides
+                slides[i].classList.remove("active"); // Remove active class
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1; } // Loop back to the first slide
+            slides[slideIndex - 1].classList.add("active"); // Show the active slide
+            slides[slideIndex - 1].classList.remove("hidden"); // Remove hidden class
+
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+
+        showSlides();
+    </script>
+</body>
+</html>
